@@ -1,13 +1,26 @@
 from collections import defaultdict
 import math
-from linear_partition import linear_partition
+from linear_partition import linear_partition, xi
 
 R = 8.31446
-in_edges = lambda v: [] #TODO
 w = lambda e: 0 #TODO
 Z = lambda v: 0 #TODO
+pair_match = lambda x, i, j: xi(x, i, j) != 0
 
 S = defaultdict(set)
+
+def in_edges(v, Z):
+  x, i, j = v
+  if j == i-1:
+    return ((x, i, i-1), [])
+  if Z[j-1][i] != 0:
+    return ((x, i, j), [(x, i, j-1)])
+  
+  for k_p in Z[j-1]:
+    k = k_p-1
+    if pair_match(x, k, j) and Z[k-1][i] != 0:
+      return ((x, i, j), [(x, i, k-1), (x, k+1, j-1)])
+
 
 def sum_edges(v, saving):
   s = 0
@@ -21,7 +34,7 @@ def sum_edges(v, saving):
 sample = lambda l: l[0] #TODO
 f = lambda e: 0 #TODO
 
-def sample_lazy(v, visited, Q):
+def sample_lazy(v, visited, Z):
   if v not in visited:
     sum_edges(v, True)
     visited.add(v)
@@ -30,9 +43,12 @@ def sample_lazy(v, visited, Q):
     _, subs = e
     #return f(e)(sample_lazy([(u, visited) for u in subs]))
   
-def main_lazy(rna, k):
-  n = len(rna)
-  Q = linear_partition(rna)
+def main_lazy(x, k):
+  n = len(x)
+  Z = linear_partition(x)
   visited = set()
+  samples = []
   for _ in range(k):
-    sample_lazy((rna, 1, n), visited)
+    samples.append(sample_lazy((x, 1, n), visited, Z))
+
+  return samples
