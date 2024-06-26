@@ -12,7 +12,7 @@ def calculate_mfe(rna, secondary, T):
   }
 
   stack = []
-  mfe = 1
+  mfe = 0
 
   for i, symbol in enumerate(secondary):
     if symbol == '(':
@@ -21,6 +21,6 @@ def calculate_mfe(rna, secondary, T):
       if stack:
         j = stack.pop()
         pair = rna[j] + rna[i]
-        mfe *= math.exp(-1*energy.get(pair, 0)/(R*T))
+        mfe += energy.get(pair, 0)
   
-  return mfe
+  return math.exp(-1*mfe/(R*T))
