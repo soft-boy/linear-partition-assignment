@@ -3,5 +3,5 @@
 - [x] Inside
 - [x] Log-Inside
 - [x] Outside
-- [ ] Base Pair Probs
+- [x] Base Pair Probs
 - [ ] Sampling
