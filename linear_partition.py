@@ -1,5 +1,6 @@
 from collections import defaultdict
 from qselect import qselect
+import math
 
 e = 2.71828
 R = 8.31446
@@ -72,10 +73,12 @@ def base_pairing_probs(rna, Q, T=10000000):
       Q_hat[(i, j-1)] += Q_hat[(i, j)]*delta_eq
 
       pair = get_pair(rna, i-1, j)
-      if pair in {"AU", "UA", "CG", "GC", "GU", "UG"}:
+      if pair in {"AU", "UA", "CG", "GC", "GU", "UG"} and i-2 > -1:
         for k in Q[i-2]:
-          if j-1 >= 1: Q_hat[(k, i-2)] += Q_hat[(k, j)] * Q[j-1][i] * pow(e, -xi(rna, i-1, j)/(R*T))
-          if i-2 >= 1: Q_hat[(i, j-1)] += Q_hat[(k, j)] * Q[i-2][k] * pow(e, -xi(rna, i-1, j)/(R*T))
-          p[(i-1, j)] += Q_hat[(k, j)] * Q[i-2][k] * pow(e, -xi(rna, i-1, j)/(R*T))*Q[j-1][i]/Q[n][1]
+          energy = xi(rna, i-1, j)
+          Q_hat[(k, i-2)] += Q_hat[(k, j)] * Q[j-1][i] * pow(e, -energy/(R*T))
+          Q_hat[(i, j-1)] += Q_hat[(k, j)] * Q[i-2][k] * pow(e, -energy/(R*T))
+          p[(i-1,j)] += (Q_hat[(k, j)] * Q[i-2][k] * math.exp(-energy/(R*T)) * Q[j-1][i])/Q[n][1]
+          p[(j,i-1)] += (Q_hat[(k, j)] * Q[i-2][k] * math.exp(-energy/(R*T)) * Q[j-1][i])/Q[n][1]
 
   return p, Q_hat

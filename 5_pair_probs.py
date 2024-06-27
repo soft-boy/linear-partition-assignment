@@ -2,7 +2,7 @@ from linear_partition import *
 import numpy as np
 np.set_printoptions(precision=2)
 
-T = 0.001
+T = 0.01
 
 def test(rna):
   print('p:', rna)
@@ -15,8 +15,8 @@ def test(rna):
   for i in range(1, n+1):
     for j in range(1, n+1):
       prob = p[(i, j)]
-      if prob < 0.001: prob = 0.0
-      
+      if prob < 0.001:
+        prob = 0.0
       arr[i-1][j-1] = prob
 
   arr = np.array(arr)
@@ -26,4 +26,4 @@ def test(rna):
 test('ACAGU')
 test('AC')
 test('GUAC')
-test('GCACG')
+test('UUCAGGA')
