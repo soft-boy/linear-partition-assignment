@@ -13,7 +13,7 @@ def xi(x, i, j):
   if pair in {"CG", "GC"}: return -3
   elif pair in {"AU", "UA"}: return -2
   elif pair in {"GU", "UG"}: return -1
-  else: raise Exception("Invalid base pair")
+  else: return 0
 
 def top_b(candidates, b):
   if len(candidates) <= b: return candidates

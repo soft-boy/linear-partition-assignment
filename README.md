@@ -4,4 +4,4 @@
 - [x] Log-Inside
 - [x] Outside
 - [x] Base Pair Probs
-- [ ] Sampling
+- [x] Sampling

@@ -18,6 +18,7 @@ def test(rna):
       if prob < 0.001:
         prob = 0.0
       arr[i-1][j-1] = prob
+      arr[j-1][i-1] = prob
 
   arr = np.array(arr)
   print(arr)
