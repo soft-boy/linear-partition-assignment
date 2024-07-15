@@ -72,8 +72,9 @@ def outside_2(rna, S_in, P_in, T=10000000):
         for k in S_in[i-2]:
           S_out[(k, i-2)] += S_out[(k, j)] * P_in[j][i-1]
           P_out[(i-1, j)] += S_out[(k, j)] * S_in[i-2][k]
+          S_out[(i, j-1)] += P_out[(i-1, j)] * pow(e, -xi(rna, i-1, j)/(R*T))
 
-          p[(i-1,j)] += P_out[(i-1, j)] * P_in[j][i-1] / S_in[n][1]
-          p[(j,i-1)] = p[(i-1,j)]
+        p[(i-1,j)] = P_out[(i-1, j)] * P_in[j][i-1] / S_in[n][1]
+        p[(j,i-1)] = p[(i-1,j)]
 
   return p, S_out, P_out

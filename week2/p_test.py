@@ -17,6 +17,8 @@ def test(rna):
       prob = p[(i, j)]
       if prob < 0.001:
         prob = 0.0
+      elif prob > 1:
+        prob = 1.0
       arr[i-1][j-1] = prob
       arr[j-1][i-1] = prob
 
