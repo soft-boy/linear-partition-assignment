@@ -24,7 +24,7 @@ for j = n ... 1:
 
         \out(S_k,i-2) += \out(S_k,j) * \in(P_i-1,j)
         \out(P_i-1,j) += \out(S_k,j) * \in(S_k,i-2)
-        \out(S_i,j-1) += \out(P_i+1,j) * (e^-xi(i-1,j)/RT)
+        \out(S_i,j-1) += \out(P_i-1,j) * (e^-xi(i-1,j)/RT)
 
       prob_i-i,j = \out(P_i-1,j) * \in(P_i-1,j) / total
   
